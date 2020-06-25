@@ -1,0 +1,51 @@
+<!--
+https://github.com/bitcoinjs/bitcoinjs-lib
+https://github.com/coinables/buidljs
+https://github.com/davidshimjs/qrcodejs
+-->
+<html>
+    <head>
+        <script src="buidl.js"></script>
+        <script src="qrcode.js"></script>
+    </head>
+
+    <body>
+        <h1>Wallet Generator</h1>
+        <button onclick="buttonClick()">Create New Address</button><br>
+        <br><br>
+        <table width="100%">   
+            <tr>
+                <td><div id="writeStringPublicKey"></div></td>
+                <td><div id="writeStringPrivateKey"></div></td>
+            </tr> 
+            <tr>
+                <td><div id="qrcode"></div></td>
+                <td><div id="qrprivate"></div></td>
+            </tr>
+            <tr>
+                <td><div id="addressDiv"></div></td>
+                <td><div id="privateKeyDiv"></div></td>
+            </tr>
+        </table>        
+        
+        <script>
+            function buttonClick(){
+                var newPair = buidl.getNewAddress();
+	            var address = newPair.p2pkh;
+                var privateKey = newPair.pk;
+                
+                document.getElementById("writeStringPublicKey").innerHTML="Public Key";
+                document.getElementById("writeStringPrivateKey").innerHTML="Private Key";
+
+                document.getElementById("addressDiv").innerHTML=address;
+                document.getElementById("privateKeyDiv").innerHTML=privateKey;
+
+                document.getElementById("qrcode").innerHTML="";
+                document.getElementById("qrprivate").innerHTML="";
+
+                new QRCode(document.getElementById("qrcode"), address);
+                new QRCode(document.getElementById("qrprivate"), privateKey);
+            }
+        </script>
+    </body>
+</html>
